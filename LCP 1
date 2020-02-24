@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class Solution {
+    public int game(int[] guess, int[] answer) {
+        int result=0;
+        for(int i=0;i<3;i++){
+            if(guess[i]==answer[i])
+            {
+                result++;
+            }
+        }
+        return result;
+    }
+}
+
+public class MainClass {
+    public static int[] stringToIntegerArray(String input) {
+        input = input.trim();//去除字符串两端的空白 参考网址https://www.cnblogs.com/cc11001100/p/9434082.html
+        input = input.substring(1, input.length() - 1);
+        //截取当前字符串的子串,例如：[1,2,3]，是从1开始，截到3
+        //1.字符串截取索引值是从0开始的
+        //2. substring(start, end), 这两个参数范围是 start<=index<end， 也就是说是包括start, 但是不包括end, 实际为end-1
+        //参考网址https://www.cnblogs.com/tedzhao/archive/2012/07/31/Java_String_substring.html
+        if (input.length() == 0) {
+            return new int[0];
+        }
+
+        String[] parts = input.split(",");//按，分割
+        int[] output = new int[parts.length];
+        for(int index = 0; index < parts.length; index++) {//把字符串数组一个个转换为int数组
+            String part = parts[index].trim();
+            output[index] = Integer.parseInt(part);
+        }
+        return output;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        while ((line = in.readLine()) != null) {
+            int[] guess = stringToIntegerArray(line);
+            line = in.readLine();
+            int[] answer = stringToIntegerArray(line);
+
+            int ret = new Solution().game(guess, answer);
+
+            String out = String.valueOf(ret);
+            //将基本数据型态（int、double、bool等）转换成 String 的 static 方法
+            //参考网址https://www.cnblogs.com/aademeng/articles/10870164.html
+
+            System.out.print(out);
+        }
+    }
+}
